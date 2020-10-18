@@ -1,14 +1,12 @@
+import random
+
+
 def play():
-    print("************************************")
-    print("*****Bem vindo ao jogo de forca*****")
-    print("************************************")
+    opening_message()
 
-    secretWord = "nico".upper()
-    correctLetters = []
+    secretWord = get_secretword()
 
-    ## correctLetters = ["_" for letter in secretWord] - outro jeito de fazer
-    for letter in secretWord:
-        correctLetters.append("_")
+    correctLetters = get_correctLetters(secretWord)
 
     hanged = False
     hit = False
@@ -20,12 +18,7 @@ def play():
         attempt = input("Qual letra?").strip().upper()
 
         if (attempt in secretWord):
-            index = 0
-            for letter in secretWord:
-                if (attempt == letter):
-                    correctLetters[index] = letter
-                index += 1
-            print(correctLetters)
+            correctAttempt(secretWord, attempt, correctLetters)
         else:
             errors += 1
 
@@ -37,9 +30,42 @@ def play():
             print("Parabéns, você ganhou!")
         if (hanged):
             print("Você perdeu :(")
-
+            print("A palavra era: {}".format(secretWord))
 
     print(f"Fim de jogo!")
+
+
+def opening_message():
+    print("************************************")
+    print("*****Bem vindo ao jogo de forca*****")
+    print("************************************")
+
+
+def get_secretword():
+    words = []
+    file = open("palavras.txt", "r")
+    for line in file:
+        line = line.strip()
+        words.append(line)
+    file.close()
+
+    return words[random.randrange(0, len(words))].upper()
+
+
+def get_correctLetters(secretWord):
+    list = []
+    ## correctLetters = ["_" for letter in secretWord] - outro jeito de fazer
+    for letter in secretWord:
+        list.append("_")
+    return list
+
+
+def correctAttempt(secretWord, attempt, correctLetters):
+    index = 0
+    for letter in secretWord:
+        if (attempt == letter):
+            correctLetters[index] = letter
+        index += 1
 
 
 if (__name__ == "__main__"):

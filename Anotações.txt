@@ -23,3 +23,8 @@ Functions
 print("R$ {:.2f}".format(value))
 print("R$ {:07.2f}".format(value))
 print("Data: {:02d}/{:02d}".format(date))
+
+
+with open("palavras.txt") as arquivo:
+    for linha in arquivo:
+        print(linha)
